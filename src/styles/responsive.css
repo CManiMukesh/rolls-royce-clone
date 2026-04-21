@@ -1,0 +1,75 @@
+/* src/styles/responsive.css */
+/* Additional responsive adjustments */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 24px;
+  }
+  
+  /* Typography scaling */
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+  }
+  
+  h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Page content styles */
+.page-content {
+  padding-top: 120px;
+  min-height: 70vh;
+}
+
+.page-header {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+}
+
+.page-header h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: #c9a03d;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: #ccc;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.page-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding-top: 80px;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .page-header p {
+    font-size: 0.9rem;
+  }
+  
+  .page-body {
+    padding: 40px 24px;
+  }
+}

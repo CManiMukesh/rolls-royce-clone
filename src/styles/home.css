@@ -1,0 +1,259 @@
+/* src/styles/home.css */
+.hero {
+  height: 100vh;
+  width: 100%;
+  background-image: url('https://images.unsplash.com/photo-1631295868223-63228b10f8e4?q=80&w=2070&auto=format');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 80px;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 4rem;
+  letter-spacing: 8px;
+  margin-bottom: 20px;
+  animation: fadeInUp 1s ease;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+  font-weight: 300;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main Sections */
+.main-sections {
+  padding: 120px 0;
+}
+
+.section-block {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  margin-bottom: 120px;
+  padding: 0 60px;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-block.reverse {
+  flex-direction: row-reverse;
+}
+
+.section-image {
+  flex: 1;
+  overflow: hidden;
+}
+
+.section-image img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.section-image img:hover {
+  transform: scale(1.03);
+}
+
+.section-text {
+  flex: 1;
+  padding: 40px;
+}
+
+.section-text h2 {
+  font-size: 3rem;
+  margin-bottom: 24px;
+  color: #c9a03d;
+}
+
+.section-text p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #ccc;
+  margin-bottom: 32px;
+}
+
+.section-link {
+  display: inline-block;
+  color: #c9a03d;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #c9a03d;
+  padding-bottom: 4px;
+  transition: all 0.3s;
+}
+
+.section-link:hover {
+  color: #fff;
+  border-bottom-color: #fff;
+  transform: translateX(5px);
+}
+
+/* Explore Further Section */
+.explore-further {
+  padding: 80px 60px 120px;
+  background-color: #0a0a0a;
+}
+
+.explore-further h2 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 60px;
+  color: #c9a03d;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.grid-card {
+  background: #111;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+
+.grid-card:hover {
+  transform: translateY(-10px);
+}
+
+.grid-card-image {
+  height: 300px;
+  overflow: hidden;
+}
+
+.grid-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.grid-card:hover .grid-card-image img {
+  transform: scale(1.05);
+}
+
+.grid-card-content {
+  padding: 32px;
+}
+
+.grid-card-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: #c9a03d;
+}
+
+.grid-card-content p {
+  font-size: 0.9rem;
+  color: #aaa;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .section-block {
+    flex-direction: column;
+    gap: 40px;
+    padding: 0 40px;
+  }
+  
+  .section-block.reverse {
+    flex-direction: column;
+  }
+  
+  .section-image img {
+    height: 400px;
+  }
+  
+  .section-text {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+    letter-spacing: 4px;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+  
+  .main-sections {
+    padding: 60px 0;
+  }
+  
+  .section-block {
+    padding: 0 24px;
+    margin-bottom: 60px;
+  }
+  
+  .section-text h2 {
+    font-size: 2rem;
+  }
+  
+  .section-text p {
+    font-size: 0.9rem;
+  }
+  
+  .explore-further {
+    padding: 60px 24px;
+  }
+  
+  .explore-further h2 {
+    font-size: 2rem;
+  }
+  
+  .grid-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .grid-card-image {
+    height: 250px;
+  }
+}

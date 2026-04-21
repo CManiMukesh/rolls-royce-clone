@@ -1,91 +1,15 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>RR Clone</title>
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    height: 100vh;
-    width: 100vw;
-    background: #ffffff;
-    overflow: hidden;
-}
-
-/* Wrapper */
-.wrapper {
-    position: absolute;
-}
-
-/* Logo image only */
-.logo img {
-    width: 180px; /* adjust as needed */
-    height: auto;
-
-    /* ultra-soft shadow for floating effect */
-    /*
-    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.12))
-            drop-shadow(0 5px 10px rgba(0,0,0,0.08));*/
-
-    animation: floatPulse 5s ease-in-out infinite;
-}
-
-/* subtle breathing */
-@keyframes floatPulse {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.04); }
-}
-</style>
-</head>
-
-<body>
-
-<div class="wrapper" id="logoBox">
-    <div class="logo">
-        <img src="Rolls-Royce-Logo-2020.jpg" alt="RR Logo">
-    </div>
-</div>
-
-<script>
-const box = document.getElementById("logoBox");
-
-let x = 100;
-let y = 100;
-
-// random direction
-let dx = (Math.random() * 2 + 1) * (Math.random() < 0.5 ? 1 : -1);
-let dy = (Math.random() * 2 + 1) * (Math.random() < 0.5 ? 1 : -1);
-
-function animate() {
-    const rect = box.getBoundingClientRect();
-
-    x += dx;
-    y += dy;
-
-    // bounce + slight randomness
-    if (x <= 0 || x + rect.width >= window.innerWidth) {
-        dx *= -1;
-        dx += (Math.random() - 0.5) * 0.5;
-    }
-
-    if (y <= 0 || y + rect.height >= window.innerHeight) {
-        dy *= -1;
-        dy += (Math.random() - 0.5) * 0.5;
-    }
-
-    box.style.transform = `translate(${x}px, ${y}px)`;
-
-    requestAnimationFrame(animate);
-}
-
-animate();
-</script>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rolls-Royce Motor Cars | Inspiring Greatness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
