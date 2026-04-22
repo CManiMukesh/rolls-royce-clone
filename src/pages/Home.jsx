@@ -18,7 +18,7 @@ const CinematicSection = ({ sectionIndex, activeIndex, data }) => {
       if (data.video) {
         const timer = setTimeout(() => {
           setShowVideo(true)
-        }, data.videoDelay || 2200)
+        }, data.videoDelay || 1100)
 
         return () => clearTimeout(timer)
       }
@@ -146,24 +146,24 @@ const Home = () => {
       tagline: 'A COACHBUILD COLLECTION',
       cta: 'DISCOVER MORE',
       image:
-        'https://images.unsplash.com/photo-1631295868223-63228b10f8e4?q=80&w=2070&auto=format',
-      video: 'https://www.w3schools.com/html/mov_bbb.mp4',
-      videoDelay: 2200,
+        'public/images/image (1).jpg',
+      video: 'public/videos/main.mp4',
+      videoDelay: 1100,
     },
     {
       title: 'COACHBUILD COLLECTION',
       cta: 'DISCOVER NOW',
       image:
-        'https://images.unsplash.com/photo-1568605117036-5fe5e7fa0ac7?q=80&w=2070&auto=format',
-      video: 'https://www.w3schools.com/html/movie.mp4',
-      videoDelay: 1800,
+        'public/images/image2.jpg',
+      video: 'public/videos/Rolls-Royce Motor Cars Inspiring Greatness (1).mp4',
+      videoDelay: 1100,
     },
     {
       subtitle: 'AN INTRODUCTION TO POSSIBILITY',
       title: 'THE WORLD OF BESPOKE',
       cta: 'DISCOVER NOW',
       image:
-        'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=2064&auto=format',
+        'public/images/cq5dam.web.1920.webp',
     },
   ]
 
