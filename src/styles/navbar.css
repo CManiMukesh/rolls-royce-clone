@@ -1,126 +1,187 @@
 /* src/styles/navbar.css */
+
+/* ── Base Navbar ─────────────────────────────────────────── */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 24px 48px;
+  padding: 0 40px;
+  height: 76px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.5s ease;
   background-color: transparent;
+  transition: background-color 0.5s ease, height 0.4s ease;
+  box-sizing: border-box;
 }
 
 .navbar.scrolled {
-  background-color: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 16px 48px;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  height: 64px;
 }
 
+/* ── Thin rule line under navbar ─────────────────────────── */
+.navbar-rule {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.25);
+  z-index: 999;
+  transition: opacity 0.4s ease, top 0.4s ease;
+  pointer-events: none;
+}
+
+.navbar-rule.rule-hidden {
+  opacity: 0;
+}
+
+/* ── Left: Hamburger + MENU text ─────────────────────────── */
 .navbar-left {
   flex: 1;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .hamburger-btn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  z-index: 1001;
-}
-
-.hamburger-btn span {
-  width: 24px;
-  height: 2px;
-  background-color: #ffffff;
-  transition: all 0.3s ease;
-}
-
-.navbar.scrolled .hamburger-btn span {
-  background-color: #ffffff;
-}
-
-.navbar-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  font-weight: 500;
-  letter-spacing: 4px;
-  transition: all 0.5s ease;
-  cursor: pointer;
+  align-items: center;
+  gap: 10px;
   color: #ffffff;
 }
 
-.navbar.scrolled .logo {
-  font-size: 1.2rem;
-  letter-spacing: 6px;
+.ham-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 20px;
 }
 
-.logo.spirit-effect {
-  transform: translateY(-5px) scale(0.95);
-  opacity: 0.95;
+.ham-icon span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease;
 }
 
+.hamburger-btn:hover .ham-icon span {
+  background-color: rgba(255, 255, 255, 0.65);
+}
+
+.menu-label {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+.hamburger-btn:hover .menu-label {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── Center: RR Monogram ─────────────────────────────────── */
+.navbar-center {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.logo-btn:hover {
+  opacity: 0.75;
+}
+
+.rr-monogram {
+  width: 38px;
+  height: 46px;
+  display: block;
+}
+
+/* ── Right: Search + Find A Dealer ───────────────────────── */
 .navbar-right {
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  gap: 32px;
   align-items: center;
+  gap: 24px;
 }
 
-.search-icon {
-  font-size: 1.2rem;
+.nav-icon-btn {
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: opacity 0.3s;
+  padding: 0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
 }
 
-.search-icon:hover {
-  opacity: 0.7;
+.nav-icon-btn:hover {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.nav-search-svg {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 .find-dealer {
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 1px;
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: opacity 0.3s;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
   color: #ffffff;
+  padding: 0;
+  transition: color 0.3s ease;
+  line-height: 1;
 }
 
 .find-dealer:hover {
-  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.65);
 }
 
-/* Hamburger Overlay Menu */
+/* ── Hamburger Overlay ───────────────────────────────────── */
 .hamburger-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.98);
-  backdrop-filter: blur(20px);
+  inset: 0;
+  background-color: rgba(22, 16, 10, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.5s ease;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  overflow-y: auto;
 }
 
 .hamburger-overlay.open {
@@ -128,103 +189,171 @@
   visibility: visible;
 }
 
-.overlay-content {
-  max-width: 800px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  padding: 40px;
-}
-
-.overlay-menu-item {
-  margin-bottom: 32px;
-  text-align: center;
-}
-
-.overlay-menu-link {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem;
-  font-weight: 300;
-  letter-spacing: 2px;
-  color: #ffffff;
-  transition: all 0.3s;
-  display: inline-block;
-}
-
-.overlay-menu-link:hover {
-  color: #c9a03d;
-  transform: translateX(5px);
-}
-
-.overlay-submenu {
-  margin-top: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.overlay-submenu a {
-  font-size: 0.9rem;
-  color: #aaa;
-  transition: color 0.3s;
-}
-
-.overlay-submenu a:hover {
-  color: #c9a03d;
-}
-
+/* ── Close button — top left ─────────────────────────────── */
 .close-overlay {
-  position: absolute;
-  top: 30px;
-  right: 48px;
-  font-size: 2rem;
-  color: #fff;
+  position: fixed;
+  top: 28px;
+  left: 32px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.3rem;
   cursor: pointer;
-  transition: opacity 0.3s;
+  z-index: 1002;
+  line-height: 1;
+  padding: 4px 8px;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+  font-weight: 300;
 }
 
 .close-overlay:hover {
-  opacity: 0.7;
+  opacity: 1;
 }
 
+/* ── Overlay nav content — right-aligned ─────────────────── */
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 80px 64px 60px;
+  box-sizing: border-box;
+}
+
+/* ── Each menu row ───────────────────────────────────────── */
+.overlay-menu-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 4px;
+}
+
+/* ── Parent link label ───────────────────────────────────── */
+.overlay-menu-link {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: rgba(220, 210, 195, 0.9);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: color 0.25s ease;
+  user-select: none;
+  line-height: 1.2;
+}
+
+.overlay-menu-link:hover,
+.overlay-menu-item.expanded > .overlay-menu-link {
+  color: #ffffff;
+}
+
+.overlay-chevron {
+  display: inline-block;
+  font-size: 1.1rem;
+  color: rgba(200, 185, 165, 0.6);
+  transition: transform 0.3s ease, color 0.25s ease;
+  margin-left: 4px;
+  line-height: 1;
+}
+
+.overlay-chevron.up {
+  transform: rotate(90deg);
+  color: rgba(200, 185, 165, 0.9);
+}
+
+/* ── Submenu accordion ───────────────────────────────────── */
+.overlay-submenu {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+  overflow: hidden;
+}
+
+.overlay-submenu.submenu-open {
+  grid-template-rows: 1fr;
+}
+
+.overlay-submenu-inner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding-bottom: 2px;
+}
+
+/* ── Sub links ───────────────────────────────────────────── */
+.overlay-sub-link {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: clamp(0.72rem, 1.1vw, 0.82rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: rgba(180, 165, 148, 0.75);
+  text-decoration: none;
+  padding: 5px 0;
+  cursor: pointer;
+  display: block;
+  text-align: right;
+  transition: color 0.2s ease;
+  user-select: none;
+}
+
+.overlay-sub-link:hover {
+  color: rgba(220, 210, 195, 1);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .navbar {
-    padding: 20px 24px;
+    padding: 0 20px;
+    height: 64px;
   }
-  
+
   .navbar.scrolled {
-    padding: 12px 24px;
+    height: 56px;
   }
-  
-  .logo {
-    font-size: 1.2rem;
-    letter-spacing: 3px;
+
+  .navbar-rule {
+    top: 64px;
   }
-  
-  .navbar.scrolled .logo {
-    font-size: 1rem;
-  }
-  
+
   .navbar-right {
     gap: 16px;
   }
-  
+
   .find-dealer {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
   }
-  
-  .overlay-menu-link {
-    font-size: 1.5rem;
+
+  .rr-monogram {
+    width: 30px;
+    height: 36px;
   }
-  
-  .overlay-submenu {
-    flex-direction: column;
-    gap: 12px;
+
+  .overlay-content {
+    padding: 80px 28px 48px;
   }
-  
+
   .close-overlay {
+    left: 16px;
     top: 20px;
-    right: 24px;
+  }
+
+  .overlay-menu-link {
+    font-size: 1rem;
+    letter-spacing: 0.14em;
+  }
+
+  .overlay-sub-link {
+    font-size: 0.78rem;
   }
 }
