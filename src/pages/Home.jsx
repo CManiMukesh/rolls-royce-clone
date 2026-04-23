@@ -8,6 +8,7 @@ import '../styles/home.css'
 const CinematicSection = ({ sectionIndex, activeIndex, data }) => {
   const [showVideo, setShowVideo] = useState(false)
   const [animStarted, setAnimStarted] = useState(false)
+  const videoRef = useRef(null)
 
   const isActive = activeIndex === sectionIndex
 
@@ -18,6 +19,10 @@ const CinematicSection = ({ sectionIndex, activeIndex, data }) => {
       if (data.video) {
         const timer = setTimeout(() => {
           setShowVideo(true)
+          // Force play on mobile
+          if (videoRef.current) {
+            videoRef.current.play().catch(() => {})
+          }
         }, data.videoDelay || 1100)
 
         return () => clearTimeout(timer)
@@ -25,6 +30,10 @@ const CinematicSection = ({ sectionIndex, activeIndex, data }) => {
     } else {
       setShowVideo(false)
       setAnimStarted(false)
+      if (videoRef.current) {
+        videoRef.current.pause()
+        videoRef.current.currentTime = 0
+      }
     }
   }, [isActive, data.video, data.videoDelay])
 
@@ -47,12 +56,15 @@ const CinematicSection = ({ sectionIndex, activeIndex, data }) => {
 
         {data.video && (
           <video
+            ref={videoRef}
             className={`cin-video${showVideo ? ' show' : ''}`}
             src={data.video}
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
+            webkit-playsinline="true"
           />
         )}
 
@@ -94,22 +106,19 @@ const CinematicSection = ({ sectionIndex, activeIndex, data }) => {
 const ExploreSection = () => {
   const exploreCards = [
     {
-      image:
-        'https://images.unsplash.com/photo-1618843479313-40f8afb6b7d6?q=80&w=2070&auto=format',
+      image: '/public/images/cq5dam.web.1920 (2).webp',
       title: 'THE HISTORY OF COACHBUILD',
       description:
         'A visionary commission redefining automotive luxury through innovative design and unparalleled craftsmanship.',
     },
     {
-      image:
-        'https://images.unsplash.com/photo-1631295868223-63228b10f8e4?q=80&w=2070&auto=format',
+      image: '/public/images/cq5dam.web.1920 (1).webp',
       title: 'ROLLS-ROYCE ARCADIA DROPTAIL',
       description:
         'Named after a realm in Ancient Greek mythology, the third Droptail commission - a haven of tranquillity.',
     },
     {
-      image:
-        'https://images.unsplash.com/photo-1566473965994-3fa105e4bf44?q=80&w=2070&auto=format',
+      image: '/public/images/cq5dam.web.1920 (3).webp',
       title: 'INSPIRING GREATNESS',
       description:
         'A confluence of exceptional and extraordinary narratives, as revealed by Rolls-Royce.',
@@ -120,8 +129,8 @@ const ExploreSection = () => {
     <section className="explore-section">
       <div className="explore-inner">
         <div className="explore-header">
-          <h2 className="explore-title">EXPLORE FURTHER</h2>
           <p className="explore-eyebrow">CONTINUE YOUR JOURNEY</p>
+          <h2 className="explore-title">EXPLORE FURTHER</h2>
         </div>
 
         <div className="grid-container">
@@ -138,6 +147,7 @@ const ExploreSection = () => {
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(0)
   const isScrolling = useRef(false)
+  const touchStartY = useRef(null)
 
   const cinematicSections = [
     {
@@ -145,16 +155,14 @@ const Home = () => {
       title: 'NIGHTINGALE',
       tagline: 'A COACHBUILD COLLECTION',
       cta: 'DISCOVER MORE',
-      image:
-        'public/images/image (1).jpg',
+      image: 'public/images/image (1).jpg',
       video: 'public/videos/main.mp4',
       videoDelay: 1100,
     },
     {
       title: 'COACHBUILD COLLECTION',
       cta: 'DISCOVER NOW',
-      image:
-        'public/images/image2.jpg',
+      image: 'public/images/image2.jpg',
       video: 'public/videos/Rolls-Royce Motor Cars Inspiring Greatness (1).mp4',
       videoDelay: 1100,
     },
@@ -162,45 +170,42 @@ const Home = () => {
       subtitle: 'AN INTRODUCTION TO POSSIBILITY',
       title: 'THE WORLD OF BESPOKE',
       cta: 'DISCOVER NOW',
-      image:
-        'public/images/cq5dam.web.1920.webp',
+      image: 'public/images/cq5dam.web.1920.webp',
     },
   ]
 
   const LAST = cinematicSections.length - 1
 
-  const goToSection = useCallback((index) => {
-    const clamped = Math.max(0, Math.min(index, LAST))
-    setActiveIndex(clamped)
-
-    window.scrollTo({
-      top: window.innerHeight * clamped,
-      behavior: 'smooth',
-    })
-  }, [LAST])
+  const goToSection = useCallback(
+    (index) => {
+      const clamped = Math.max(0, Math.min(index, LAST))
+      setActiveIndex(clamped)
+      window.scrollTo({
+        top: window.innerHeight * clamped,
+        behavior: 'smooth',
+      })
+    },
+    [LAST]
+  )
 
   // ─── Wheel Scroll Logic ─────────────────────────────────────
   useEffect(() => {
     const handleWheel = (e) => {
       const dir = e.deltaY > 0 ? 1 : -1
 
-      // Allow normal scroll in explore
       if (activeIndex > LAST) return
 
-      // Move to explore
       if (activeIndex === LAST && dir === 1) {
         setActiveIndex(LAST + 1)
         return
       }
 
-      // Move back to cinematic
       if (activeIndex === LAST + 1 && dir === -1) {
         e.preventDefault()
         goToSection(LAST)
         return
       }
 
-      // Cinematic snap
       e.preventDefault()
       if (isScrolling.current) return
 
@@ -208,12 +213,10 @@ const Home = () => {
 
       setActiveIndex((prev) => {
         const next = Math.max(0, Math.min(prev + dir, LAST))
-
         window.scrollTo({
           top: window.innerHeight * next,
           behavior: 'smooth',
         })
-
         return next
       })
 
@@ -226,12 +229,70 @@ const Home = () => {
     return () => window.removeEventListener('wheel', handleWheel)
   }, [activeIndex, LAST, goToSection])
 
+  // ─── Touch Scroll Logic (mobile) ───────────────────────────
+  useEffect(() => {
+    const handleTouchStart = (e) => {
+      touchStartY.current = e.touches[0].clientY
+    }
+
+    const handleTouchEnd = (e) => {
+      if (touchStartY.current === null) return
+
+      const deltaY = touchStartY.current - e.changedTouches[0].clientY
+      const threshold = 40
+
+      if (Math.abs(deltaY) < threshold) return
+
+      const dir = deltaY > 0 ? 1 : -1
+
+      if (activeIndex > LAST) return
+
+      if (activeIndex === LAST && dir === 1) {
+        setActiveIndex(LAST + 1)
+        touchStartY.current = null
+        return
+      }
+
+      if (activeIndex === LAST + 1 && dir === -1) {
+        goToSection(LAST)
+        touchStartY.current = null
+        return
+      }
+
+      if (isScrolling.current) return
+
+      isScrolling.current = true
+
+      setActiveIndex((prev) => {
+        const next = Math.max(0, Math.min(prev + dir, LAST))
+        window.scrollTo({
+          top: window.innerHeight * next,
+          behavior: 'smooth',
+        })
+        return next
+      })
+
+      setTimeout(() => {
+        isScrolling.current = false
+      }, 900)
+
+      touchStartY.current = null
+    }
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true })
+    window.addEventListener('touchend', handleTouchEnd, { passive: true })
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchend', handleTouchEnd)
+    }
+  }, [activeIndex, LAST, goToSection])
+
   // ─── Scroll Sync Fix ───────────────────────────────────────
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
       const sectionHeight = window.innerHeight
-
       const index = Math.round(scrollY / sectionHeight)
 
       if (index >= 0 && index <= LAST) {
@@ -249,7 +310,7 @@ const Home = () => {
 
   return (
     <div className="cin-wrapper">
-      {/* Cinematic */}
+      {/* Cinematic Sections */}
       {cinematicSections.map((data, i) => (
         <div className="cin-section-wrap" key={i}>
           <CinematicSection
